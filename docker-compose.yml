@@ -16,6 +16,19 @@ services:
       - mysql_2
       - discovery
  
+  produit:
+    build: C:\Users\Adam\Desktop\MicroService\service-product
+    ports:
+      - "8092:8092"
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+ 
+ 
+     
+    image: "produit"
+    depends_on:
+      - discovery
+
 
   article:
     build: C:\Users\Adam\Desktop\MicroService\Article\Article
