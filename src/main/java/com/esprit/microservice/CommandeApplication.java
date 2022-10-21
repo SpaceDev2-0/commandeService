@@ -21,13 +21,5 @@ public class CommandeApplication {
 	}
 
 	
-	@Bean
-	 ApplicationRunner init(CommandeRepository repository){
-		return args ->{
-			Stream.of("Eskander","Samir","hamma").forEach(destinataire ->{
-				repository.save(new Commande(destinataire));
-			});
-			repository.findAll().forEach(System.out::println);
-		};
-	}
+
 }

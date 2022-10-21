@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import java.util.List;
 
 
 
@@ -46,6 +47,13 @@ public class CommandeService  {
 	
 
 }
+
+	public List<Commande> retrieveAllCommandes() {
+
+		List<Commande> Commandes = (List<Commande>) CommandeRepository.findAll();
+		
+		return Commandes;
+	}
 	
 	
 	public String deleteCommande(int id) {

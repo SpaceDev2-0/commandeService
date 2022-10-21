@@ -1,5 +1,7 @@
 package com.esprit.microservice.Controller;
 
+import java.util.List;
+
 import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,9 @@ import org.springframework.boot.json.JsonParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.esprit.microservice.Entity.Commande;
+import com.esprit.microservice.Repository.CommandeRepository;
 import com.esprit.microservice.Service.CommandeService;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -29,13 +34,19 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 
+
 @RestController
+@RequestMapping("/commande")
+@CrossOrigin(origins="http://localhost:3000")
 public class CommandeRestApi {
 	private String title="hello I'm the Utilisateur Microservice";
 	
 
 	@Autowired
 	CommandeService CommandeService; 
+	
+	@Autowired
+	private CommandeRepository CommandeRepository; 
 
 	
 	
@@ -64,10 +75,19 @@ public class CommandeRestApi {
 		return title;
 	}
 	
-	@DeleteMapping(value="/id", produces= MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value="{id}", produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<String> deleteCommande(@PathVariable(value="id") int  id){
 	return new ResponseEntity<>(CommandeService.deleteCommande(id),HttpStatus.OK);
 
 	}
+	
+	
+	@GetMapping("/all")
+	   public List<Commande> getAllCommande(){
+
+		
+		return CommandeService.retrieveAllCommandes();
+	   }
+	
 }

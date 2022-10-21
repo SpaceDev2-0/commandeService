@@ -17,6 +17,7 @@ public class Commande  implements Serializable {
 	private String Date_livraison ; 
 	private String Adresse_Livraison ; 
 	private String Destinataire ; 
+	private String produit ; 
 	private int Frais;
 	public int getIdCommande() {
 		return idCommande;
@@ -31,6 +32,12 @@ public class Commande  implements Serializable {
 		Date_cmd = date_cmd;
 	}
 	
+	public String getProduit() {
+		return produit;
+	}
+	public void setProduit(String produit) {
+		this.produit = produit;
+	}
 	public String getDate_livraison() {
 		return Date_livraison;
 	}

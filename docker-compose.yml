@@ -1,8 +1,6 @@
 version: "2.7.4"
 services:
- 
-
- 
+  
   commande:
     build: C:\Users\Adam\Desktop\MicroService\MicroserviceProject
     ports:
@@ -15,6 +13,21 @@ services:
     depends_on:
       - mysql_2
       - discovery
+
+  Panier:
+    build: C:\Users\Adam\Desktop\MicroService\ServicePanier
+    ports:
+      - "8989:8989"
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql_4:3306/servicepanier?autoReconnect=true&useSSL=false
+     
+    image: "panier"
+    depends_on:
+      - mysql_4
+      - discovery
+ 
+
  
   produit:
     build: C:\Users\Adam\Desktop\MicroService\service-product
@@ -22,10 +35,20 @@ services:
       - "8092:8092"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
- 
- 
-     
+   
     image: "produit"
+    depends_on:
+      - discovery
+
+
+  facture:
+    build: C:\Users\Adam\Desktop\MicroService\Facture-MS
+    ports:
+      - "9999:9999"
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+   
+    image: "facture"
     depends_on:
       - discovery
 
@@ -76,6 +99,26 @@ services:
     ports:
       - 3309:3306        
  
+  mysql_4:
+    image: "mysql:5.6"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=servicepanier
+    ports:
+      - 3310:3306   
+      
+  
+  apigateway:
+    container_name: apigateway
+    build: C:\Users\Adam\Desktop\MicroService\cloud-gateway-service
+    ports:
+      - "5555:5555"
+    hostname: apigateway
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka    
+    image: "apigateway"  
+    depends_on:
+      -  discovery     
      
   discovery:
      build: C:\Users\Adam\Desktop\MicroService\EurekaMicroservice
