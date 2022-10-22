@@ -1,10 +1,11 @@
-version: "2.7.4"
+version: "2.7"
 services:
   
   commande:
-    build: C:\Users\Adam\Desktop\MicroService\MicroserviceProject
+ 
+    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\commandeService
     ports:
-      - "8081:8081"
+      - "8083:8083"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql_2:3306/serviceCommande?autoReconnect=true&useSSL=false
@@ -14,15 +15,16 @@ services:
       - mysql_2
       - discovery
 
-  Panier:
-    build: C:\Users\Adam\Desktop\MicroService\ServicePanier
+  servicepanier:
+
+    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\ServicePanier
     ports:
-      - "8989:8989"
+      - "8062:8062"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql_4:3306/servicepanier?autoReconnect=true&useSSL=false
      
-    image: "panier"
+    image: "servicepanier"
     depends_on:
       - mysql_4
       - discovery
@@ -30,21 +32,25 @@ services:
 
  
   produit:
-    build: C:\Users\Adam\Desktop\MicroService\service-product
+
+    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\service-product
     ports:
-      - "8092:8092"
+      - "8892:8892"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
    
     image: "produit"
     depends_on:
       - discovery
+    
 
-
+  
+ 
   facture:
-    build: C:\Users\Adam\Desktop\MicroService\Facture-MS
+ 
+    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\FactureMS
     ports:
-      - "9999:9999"
+      - "8084:8084"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
    
@@ -54,9 +60,10 @@ services:
 
 
   article:
-    build: C:\Users\Adam\Desktop\MicroService\Article\Article
+
+    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\serviceArticle2
     ports:
-      - "8095:8095"
+      - "8081:8081"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
  
@@ -67,15 +74,15 @@ services:
       - discovery
    
   fournisseur:
-    build: C:\Users\Adam\Desktop\MicroService\ServiceFournisseur
+
+    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\ServiceFournisseur
     ports:
-      - "8099:8099"
+      - "8499:8499"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
- 
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql_3:3306/fournisseurs?autoReconnect=true&useSSL=false
      
-    image: "offre"
+    image: "fournisseur"
     depends_on:
       - mysql_3  
       - discovery
@@ -90,7 +97,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=serviceCommande
     ports:
-      - 3308:3306
+      - 3311:3306
   mysql_3:
     image: "mysql:5.6"
     environment:
@@ -110,21 +117,36 @@ services:
   
   apigateway:
     container_name: apigateway
-    build: C:\Users\Adam\Desktop\MicroService\cloud-gateway-service
+    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\Cloud-getway-service
     ports:
-      - "5555:5555"
+      - "8089:8089"
     hostname: apigateway
     environment:
-      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka    
+      ports:    
     image: "apigateway"  
     depends_on:
       -  discovery     
-     
+  
+  
+  userservicemongo: 
+    build : C:\Users\Skander\Desktop\ProjetMicroserviceAll\UserServiceMongo
+    ports:
+      - "5000:5000"
+    environment: 
+     - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+    command: npm start
+    volumes:
+      - C:\Users\Skander\Desktop\ProjetMicroserviceAll\UserServiceMongo\app
+      - C:\Users\Skander\Desktop\ProjetMicroserviceAll\UserServiceMongo\app\node_modules
+    image : userservicemongo
+    depends_on:
+      -  discovery
+ 
   discovery:
-     build: C:\Users\Adam\Desktop\MicroService\EurekaMicroservice
-     image: eureka
-     ports:
-      - "8761:8761"   
+    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\eurekaServer
+    ports:
+      - 8761:8761
+    image: eureka
 
 
 
