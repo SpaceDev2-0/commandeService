@@ -31,11 +31,13 @@ services:
  
 
  
+    
+ 
   produit:
 
     build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\service-product
     ports:
-      - "8892:8892"
+      - "8092:8092"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
    
@@ -77,7 +79,7 @@ services:
 
     build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\ServiceFournisseur
     ports:
-      - "8499:8499"
+      - "8099:8099"
     environment:
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql_3:3306/fournisseurs?autoReconnect=true&useSSL=false
@@ -142,6 +144,21 @@ services:
     depends_on:
       -  discovery
  
+ 
+ 
+  
+  react: 
+    build: C:\Users\Skander\Desktop\microservice\front\react
+    ports : 
+      - "3000:3000"
+    
+    image : "react"
+    command: npm start
+    volumes:
+      - C:\Users\Skander\Desktop\microservice\front\react\
+      - C:\Users\Skander\Desktop\microservice\front\react\node_modules
+  
+  
   discovery:
     build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\eurekaServer
     ports:

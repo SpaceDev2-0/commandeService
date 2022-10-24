@@ -37,7 +37,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 @RestController
 @RequestMapping("/commande")
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="*")
 public class CommandeRestApi {
 	private String title="hello I'm the Utilisateur Microservice";
 	
@@ -75,7 +75,7 @@ public class CommandeRestApi {
 		return title;
 	}
 	
-	@DeleteMapping(value="{id}", produces= MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value="/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<String> deleteCommande(@PathVariable(value="id") int  id){
 	return new ResponseEntity<>(CommandeService.deleteCommande(id),HttpStatus.OK);
