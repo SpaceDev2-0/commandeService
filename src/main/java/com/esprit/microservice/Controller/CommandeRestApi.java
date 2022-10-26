@@ -1,6 +1,7 @@
 package com.esprit.microservice.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.xml.ws.Response;
 
@@ -36,7 +37,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 @RestController
-@RequestMapping("/commande")
+@RequestMapping("/commandes")
 @CrossOrigin(origins="*")
 public class CommandeRestApi {
 	private String title="hello I'm the Utilisateur Microservice";
@@ -88,6 +89,11 @@ public class CommandeRestApi {
 
 		
 		return CommandeService.retrieveAllCommandes();
+	   }
+	@GetMapping("/Find/{id}")
+	   public Optional<Commande> getCommandeById(@PathVariable(value="id") int  id){
+		
+		return CommandeRepository.findById(id);
 	   }
 	
 }

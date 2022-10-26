@@ -35,7 +35,7 @@ services:
  
   produit:
 
-    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\service-product
+    build: C:\Users\Skander\Desktop\ProjetMicroserviceAll\serviceProduit2
     ports:
       - "8092:8092"
     environment:
@@ -89,9 +89,11 @@ services:
       - mysql_3  
       - discovery
    
- 
- 
-     
+
+      
+   
+  
+  
    
   mysql_2:
     image: "mysql:5.6"
